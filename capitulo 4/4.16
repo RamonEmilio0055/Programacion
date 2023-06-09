@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <math.h>
+
+void Acutem(float);
+void Maxima(float, int); /* Prototipos de funciones. */
+void Minima(float, int);
+
+float ACT = 0.0;
+float MAX = -50.0;
+float MIN = 60.0;
+int HMAX;
+int HMIN;
+
+int main(void)
+{
+    float TEM;
+    int I;
+
+    for (I = 1; I <= 24; I++)
+    {
+        printf("Ingresa la temperatura de la hora %d: ", I);
+        scanf("%f", &TEM);
+        Acutem(TEM);
+        Maxima(TEM, I);
+        Minima(TEM, I);
+    }
+
+    printf("\nPromedio del día: %.2f", ACT / 24.0);
+    printf("\nTemperatura máxima: %.2f (Hora: %d)", MAX, HMAX);
+    printf("\nTemperatura mínima: %.2f (Hora: %d)", MIN, HMIN);
+
+    return 0;
+}
+
+void Acutem(float TEM)
+{
+    ACT += TEM;
+}
+
+void Maxima(float TEM, int H)
+{
+    if (TEM > MAX)
+    {
+        MAX = TEM;
+        HMAX = H;
+    }
+}
+
+void Minima(float TEM, int H)
+{
+    if (TEM < MIN)
+    {
+        MIN = TEM;
+        HMIN = H;
+    }
+}
