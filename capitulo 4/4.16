@@ -2,7 +2,7 @@
 #include <math.h>
 
 void Acutem(float);
-void Maxima(float, int); /* Prototipos de funciones. */
+void Maxima(float, int);
 void Minima(float, int);
 
 float ACT = 0.0;
@@ -32,25 +32,25 @@ int main(void)
     return 0;
 }
 
-void Acutem(float TEM)
+void Acutem(float T)
 {
-    ACT += TEM;
+    ACT += T;
 }
 
-void Maxima(float TEM, int H)
+void Maxima(float T, int H)
 {
-    if (TEM > MAX)
+    if (T > MAX)
     {
-        MAX = TEM;
+        MAX = T;
         HMAX = H;
     }
 }
 
-void Minima(float TEM, int H)
+void Minima(float T, int H)
 {
-    if (TEM < MIN)
+    if (T < MIN)
     {
-        MIN = TEM;
+        MIN = T;
         HMIN = H;
     }
 }
