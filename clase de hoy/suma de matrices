@@ -1,13 +1,19 @@
 #include <stdio.h>
 
-void sumar_matrices_verticales(int matriz_a[][3], int matriz_b[][3], int filas, int columnas) {
+ 
+
+void sumar_matrices (int matriz_a[][3], int matriz_b[][3], int filas, int columnas) {
     int matriz_c[filas][columnas];
+
+ 
 
     for (int i = 0; i < filas; i++) {
         for (int j = 0; j < columnas; j++) {
             matriz_c[i][j] = matriz_a[i][j] + matriz_b[i][j];
         }
     }
+
+ 
 
     // Imprimir la matriz resultante
     printf("Matriz resultante:\n");
@@ -19,17 +25,27 @@ void sumar_matrices_verticales(int matriz_a[][3], int matriz_b[][3], int filas, 
     }
 }
 
+ 
+
 int main() {
     int filas, columnas;
+
+ 
 
     printf("Ingrese el número de filas de las matrices: ");
     scanf("%d", &filas);
 
+ 
+
     printf("Ingrese el número de columnas de las matrices: ");
     scanf("%d", &columnas);
 
+ 
+
     int matriz_a[filas][columnas];
     int matriz_b[filas][columnas];
+
+ 
 
     printf("Ingrese los elementos de la matriz A:\n");
     for (int i = 0; i < filas; i++) {
@@ -39,6 +55,8 @@ int main() {
         }
     }
 
+ 
+
     printf("Ingrese los elementos de la matriz B:\n");
     for (int i = 0; i < filas; i++) {
         for (int j = 0; j < columnas; j++) {
@@ -47,7 +65,11 @@ int main() {
         }
     }
 
-    sumar_matrices_verticales(matriz_a, matriz_b, filas, columnas);
+ 
+
+    sumar_matrices(matriz_a, matriz_b, filas, columnas);
+
+ 
 
     return 0;
 }
