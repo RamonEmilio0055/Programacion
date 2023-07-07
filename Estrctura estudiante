@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+#define MAX_MATRICULA 20
+#define MAX_CARRERA 50
+#define MAX_NOMBRE 50
+#define MAX_ESTUDIANTES 100
+
+struct Estudiante {
+    int id;
+    char matricula[MAX_MATRICULA];
+    char carrera[MAX_CARRERA];
+    char nombre[MAX_NOMBRE];
+};
+
+void guardar_estudiante(struct Estudiante estudiante) {
+    FILE *archivo = fopen("estudiantes.txt", "a");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return;
+    }
+
+    fprintf(archivo, "ID: %d\nMatrícula: %s\nCarrera: %s\nNombre: %s\n\n", estudiante.id, estudiante.matricula, estudiante.carrera, estudiante.nombre);
+    fclose(archivo);
+}
+
+struct Estudiante crear_estudiante() {
+    struct Estudiante estudiante;
+
+    printf("Ingrese la matrícula del estudiante: ");
+    fgets(estudiante.matricula, sizeof(estudiante.matricula), stdin);
+    estudiante.matricula[strcspn(estudiante.matricula, "\n")] = '\0';
+
+    printf("Ingrese la carrera del estudiante: ");
+    fgets(estudiante.carrera, sizeof(estudiante.carrera), stdin);
+    estudiante.carrera[strcspn(estudiante.carrera, "\n")] = '\0';
+
+    printf("Ingrese el nombre del estudiante: ");
+    fgets(estudiante.nombre, sizeof(estudiante.nombre), stdin);
+    estudiante.nombre[strcspn(estudiante.nombre, "\n")] = '\0';
+
+    estudiante.id = rand() % 9000 + 1000;
+
+    return estudiante;
+}
+
+int main() {
+    srand(time(NULL));
+
+    struct Estudiante estudiantes[MAX_ESTUDIANTES];
+    int num_estudiantes = 0;
+
+    FILE *archivo = fopen("estudiantes.txt", "a");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return 1;
+    }
+    fclose(archivo);
+
+    char opcion;
+    do {
+        printf("Ingrese '1' para agregar un estudiante o '0' para salir: ");
+        scanf(" %c", &opcion);
+        getchar(); // Consumir el carácter de nueva línea
+
+        if (opcion == '1') {
+            if (num_estudiantes < MAX_ESTUDIANTES) {
+                estudiantes[num_estudiantes] = crear_estudiante();
+                guardar_estudiante(estudiantes[num_estudiantes]);
+                printf("Estudiante guardado correctamente.\n");
+                num_estudiantes++;
+            } else {
+                printf("No se pueden agregar más estudiantes. Capacidad máxima alcanzada.\n");
+            }
+        } else if (opcion != '0') {
+            printf("Opción inválida. Intente nuevamente.\n");
+        }
+    } while (opcion != '0');
+
+    printf("Programa finalizado.\n");
+
+    return 0;
+}
