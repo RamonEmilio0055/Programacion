@@ -1,0 +1,162 @@
+using System.Windows.Forms;
+using System;
+using System.Drawing.Text;
+
+namespace lab
+{
+    public partial class Form1 : Form
+    {
+        string sintoma = "";
+        string respuestas = "";
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCheck_Click(object sender, EventArgs e)
+        {
+            string nombre = txtNombre.Text;
+
+
+            if (rbMareado.Checked)
+                sintoma = "mareado";
+            else if (rbGanasDeVomitar.Checked)
+                sintoma = "ganas de vomitar";
+            else if (rbFiebre.Checked)
+                sintoma = "fiebre";
+
+
+            string nivel = "";
+            if (rbBajo.Checked)
+                nivel = "bajo";
+            else if (rbMedio.Checked)
+                nivel = "medio";
+            else if (rbAlto.Checked)
+                nivel = "alto";
+
+            string[] preguntas = null;
+            switch (sintoma)
+            {
+                case "mareado":
+                    preguntas = new string[]
+                    {
+                        "¿Ha tenido mareos al levantarse?",
+                        "¿Ha experimentado sensación de desequilibrio?",
+                        "¿Ha notado problemas de audición junto con los mareos?",
+                        "¿Los mareos empeoran con los cambios de posición?",
+                        "¿Ha tenido vómitos asociados a los mareos?"
+                    };
+                    break;
+
+                case "ganas de vomitar":
+                    preguntas = new string[]
+                    {
+                        "¿Ha tenido náuseas recientemente?",
+                        "¿Siente aversión a ciertos alimentos u olores?",
+                        "¿Ha notado un incremento en la salivación?",
+                        "¿Siente alivio temporal después de vomitar?",
+                        "¿Los síntomas empeoran después de comer?"
+                    };
+                    break;
+
+            }
+
+            if (preguntas != null)
+            {
+                string respuestas = "";
+                foreach (string pregunta in preguntas)
+                {
+                    var respuesta = MessageBox.Show(pregunta, "Pregunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    respuestas += (respuesta == DialogResult.Yes) ? "Sí\n" : "No\n";
+                }
+
+                tabControl.SelectedTab = tabPage2;
+                lblResultado.Text = $"Estimado(a) {nombre}, basado en su síntoma de {sintoma} y su nivel de molestia {nivel}, sus respuestas a las preguntas son:\n{respuestas}";
+                progressBar.Value = nivel == "bajo" ? 30 : nivel == "medio" ? 60 : 100;
+                progressBar.Visible = true;
+
+                string diagnostico = "";
+                lblDiagnostico.Text = diagnostico;
+            }
+        }
+
+        private void GenerarDiagnostico()
+        {
+            string diagnostico = "";
+
+            switch (sintoma)
+            {
+                case "mareado":
+                    if (respuestas.Contains("Sí"))
+                    {
+                        diagnostico = "Podría tratarse de un problema de vértigo. Se recomienda consultar a un médico y considerar oler alcohol y tomar una pastilla.";
+                    }
+                    else
+                    {
+                        diagnostico = "Los mareos pueden tener diversas causas. Si persisten, es recomendable consultar a un profesional de la salud.";
+                    }
+                    break;
+
+                case "ganas de vomitar":
+                    if (respuestas.Contains("Sí"))
+                    {
+                        diagnostico = "Las náuseas y vómitos pueden deberse a múltiples factores. Si son recurrentes, es importante buscar atención médica y considerar tomar una pastilla y descansar en casa.";
+                    }
+                    else
+                    {
+                        diagnostico = "Las náuseas ocasionales pueden ser normales, pero si persisten, considera consultar con un médico.";
+                    }
+                    break;
+
+                default:
+                    diagnostico = "No se pudo determinar un diagnóstico basado en las respuestas proporcionadas.";
+                    break;
+            }
+            private void lblDiagnostico_Click(object sender, EventArgs e)
+            {
+                string diagnostico = "";
+
+                switch (sintoma)
+                {
+                    case "mareado":
+                        if (respuestas.Contains("Sí"))
+                        {
+                            diagnostico = "Podría tratarse de un problema de vértigo. Se recomienda consultar a un médico y considerar oler alcohol y tomar una pastilla.";
+                        }
+                        else
+                        {
+                            diagnostico = "Los mareos pueden tener diversas causas. Si persisten, es recomendable consultar a un profesional de la salud.";
+                        }
+                        break;
+
+                    case "ganas de vomitar":
+                        if (respuestas.Contains("Sí"))
+                        {
+                            diagnostico = "Las náuseas y vómitos pueden deberse a múltiples factores. Si son recurrentes, es importante buscar atención médica y considerar tomar una pastilla y descansar en casa.";
+                        }
+                        else
+                        {
+                            diagnostico = "Las náuseas ocasionales pueden ser normales, pero si persisten, considera consultar con un médico.";
+                        }
+                        break;
+
+
+
+                    default:
+                        diagnostico = "No se pudo determinar un diagnóstico basado en las respuestas proporcionadas.";
+                        break;
+
+                }
+
+                lblDiagnostico.Text = diagnostico;
+
+            }
+        }
+
+    }
+}
